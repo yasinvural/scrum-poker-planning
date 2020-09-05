@@ -14,7 +14,12 @@ app.use(cors());
 app.use(router);
 
 io.on("connection", (socket) => {
-  console.log("connect", socket);
+  console.log("connect");
+
+  socket.on("test", ({ name }) => {
+    console.log(name);
+  });
+
   socket.on("disconnect", () => {
     console.log("disconnect");
   });
