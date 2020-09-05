@@ -1,0 +1,21 @@
+.active-story-container .story-point-row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+}
+
+.active-story-container .story-point-row > div {
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  width: 50px;
+  margin: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.active-story-container .story-point-row > div.selected {
+  border: 2px solid green;
+}
+.active-story-container .vote-info {
+  text-align: center;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import "./StoryList.css";
 import { Button, Input, InputNumber } from "antd";
 
@@ -14,6 +15,7 @@ const StoryList = () => {
     numOfVotersValid: true,
     storyListValid: false,
   });
+  const history = useHistory();
 
   useEffect(() => {
     const {
@@ -69,6 +71,7 @@ const StoryList = () => {
 
   const handleStartSession = () => {
     console.log({ sessionName: sessionName.trim(), numOfVoters, storyList });
+    history.push("/master");
   };
 
   return (
@@ -99,7 +102,7 @@ const StoryList = () => {
       <div className="start-session-button">
         <Button
           type="primary"
-          disabled={!isFormValid}
+          // disabled={!isFormValid}
           onClick={handleStartSession}
         >
           Start Session
