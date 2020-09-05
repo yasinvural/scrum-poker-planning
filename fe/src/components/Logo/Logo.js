@@ -1,9 +1,15 @@
 import React from "react";
 import "./Logo.css";
-import { Card } from "antd";
+import { PageHeader } from "antd";
 
 const Logo = () => {
-  return <Card className="logo-container">Scrum Poker</Card>;
+  return (
+    <PageHeader
+      className="logo-container"
+      title="Scrum Poker"
+      backIcon={false}
+    />
+  );
 };
 
 export default Logo;
