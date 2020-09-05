@@ -6,14 +6,13 @@ const port = 4000;
 
 app.use(express.json());
 app.use(cors());
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Headers", "*");
-//   next();
-// });
 
 app.get("/", (req, res) => {
   res.status(200).send("Hello Node.js !!");
+});
+
+app.post("/save-planning", (req, res) => {
+  res.status(201).send(req.body);
 });
 
 app.listen(port, () => {

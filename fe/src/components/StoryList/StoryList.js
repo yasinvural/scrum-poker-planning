@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import "./StoryList.css";
+import { useHistory } from "react-router-dom";
 import { Button, Input, InputNumber } from "antd";
+import { savePlanning } from "../../services/planService";
 
 const { TextArea } = Input;
 
@@ -70,8 +71,14 @@ const StoryList = () => {
   };
 
   const handleStartSession = () => {
-    console.log({ sessionName: sessionName.trim(), numOfVoters, storyList });
-    history.push("/master");
+    savePlanning({ sessionName, numOfVoters, storyList })
+      .then((data) => {
+        console.log("save planning", data);
+        history.push("/master");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -102,7 +109,7 @@ const StoryList = () => {
       <div className="start-session-button">
         <Button
           type="primary"
-          // disabled={!isFormValid}
+          disabled={!isFormValid}
           onClick={handleStartSession}
         >
           Start Session
