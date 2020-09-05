@@ -3,8 +3,11 @@ import "./StoryList.css";
 import { useHistory } from "react-router-dom";
 import { Button, Input, InputNumber } from "antd";
 import { savePlanning } from "../../services/planService";
+import io from "socket.io-client";
 
 const { TextArea } = Input;
+
+let socket;
 
 const StoryList = () => {
   const [sessionName, setSessionName] = useState("");
@@ -17,6 +20,12 @@ const StoryList = () => {
     storyListValid: false,
   });
   const history = useHistory();
+
+  useEffect(() => {
+    socket = io("http://localhost:4000");
+
+    socket.emit("test", { name: "yasin" });
+  }, []);
 
   useEffect(() => {
     const {
