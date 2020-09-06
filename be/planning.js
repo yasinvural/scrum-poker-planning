@@ -86,4 +86,13 @@ const updateVoterList = ({
   return existingPlan;
 };
 
-module.exports = { addPlan, getPlan, updateVoterList };
+const updateActiveVoter = ({ voterName, sessionName }) => {
+  const { existingPlan } = getPlan(sessionName);
+  const person = existingPlan.voterList.find((voter) => {
+    return voter.name === voterName;
+  });
+  person.active = true;
+  console.log(JSON.stringify(existingPlan));
+};
+
+module.exports = { addPlan, getPlan, updateVoterList, updateActiveVoter };

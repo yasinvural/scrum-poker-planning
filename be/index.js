@@ -3,7 +3,7 @@ const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 const router = require("./router");
-const { updateVoterList } = require("./planning");
+const { updateVoterList, updateActiveVoter } = require("./planning");
 
 const port = 4000;
 const app = express();
@@ -31,6 +31,13 @@ io.on("connection", (socket) => {
       socket.broadcast.emit("updateScrumMasterPanel", updated);
     }
   );
+
+  socket.on("updateActiveVoter", ({voterName,sessionName}) => {
+    if(voterName){
+      updateActiveVoter({voterName,sessionName});
+    }
+    
+  });
 
   socket.on("disconnect", () => {
     console.log("disconnect");
