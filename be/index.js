@@ -26,7 +26,9 @@ io.on("connection", (socket) => {
         activeStoryId,
         selectedStoryPoint,
       });
+
       socket.emit("updateScrumMasterPanel", updated);
+      socket.broadcast.emit("updateScrumMasterPanel", updated);
     }
   );
 
