@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./MasterViewPlanning.css";
 import ActiveStory from "../ActiveStory/ActiveStory";
-import { Table } from "antd";
+import StoryList from "../StoryList/StoryList";
 
 const mockStoryList = [
   { id: "1", key: "1", name: "Story1", point: null, status: "Active" },
@@ -12,24 +12,6 @@ const mockStoryList = [
   { id: "6", key: "6", name: "Story5", point: null, status: "Not Voted" },
 ];
 
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Story Point",
-    dataIndex: "point",
-    key: "point",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-  },
-];
-
 const MasterViewPlanning = () => {
   const [storyList, setStoryList] = useState(mockStoryList);
   const [activeStory, setActiveStory] = useState(mockStoryList[0]);
@@ -37,7 +19,7 @@ const MasterViewPlanning = () => {
   return (
     <div className="view-planning">
       <div className="story-list">
-        <Table dataSource={storyList} columns={columns} />
+        <StoryList storyList={storyList} />
       </div>
       <div className="active-story">
         <ActiveStory activeStory={activeStory} />
