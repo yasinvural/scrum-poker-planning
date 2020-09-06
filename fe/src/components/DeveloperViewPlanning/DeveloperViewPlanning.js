@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./MasterViewPlanning.css";
+import "./DeveloperViewPlanning.css";
 import ActiveStory from "../ActiveStory/ActiveStory";
 import { Table } from "antd";
 
@@ -30,21 +30,20 @@ const columns = [
   },
 ];
 
-const MasterViewPlanning = () => {
+const DeveloperViewPlanning = () => {
   const [storyList, setStoryList] = useState(mockStoryList);
   const [activeStory, setActiveStory] = useState(mockStoryList[0]);
 
   return (
-    <div className="view-planning">
+    <div className="developer-view-planning">
       <div className="story-list">
         <Table dataSource={storyList} columns={columns} />
       </div>
       <div className="active-story">
         <ActiveStory activeStory={activeStory} />
       </div>
-      <div className="scrum-master-panel">Scrum Master Panel</div>
     </div>
   );
 };
 
-export default MasterViewPlanning;
+export default DeveloperViewPlanning;

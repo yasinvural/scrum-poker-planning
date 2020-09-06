@@ -1,0 +1,12 @@
+.developer-view-planning {
+  display: flex;
+}
+
+.developer-view-planning .story-list {
+  flex: 0.75;
+}
+
+.developer-view-planning .active-story {
+  flex: 0.25;
+  margin: 0 25px;
+}

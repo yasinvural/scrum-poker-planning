@@ -1,3 +1,15 @@
 .view-planning {
   display: flex;
 }
+
+.view-planning .story-list {
+  flex: 0.5;
+}
+
+.view-planning .active-story,
+.view-planning .scrum-master-panel {
+  flex: 0.25;
+}
+.view-planning .active-story {
+  margin: 0 25px;
+}
