@@ -92,7 +92,22 @@ const updateActiveVoter = ({ voterName, sessionName }) => {
     return voter.name === voterName;
   });
   person.active = true;
-  console.log(JSON.stringify(existingPlan));
 };
 
-module.exports = { addPlan, getPlan, updateStoryPointOnVoterList, updateActiveVoter };
+const setStoryPoint = ({ sessionName, activeStoryName, finalScore }) => {
+  const { existingPlan } = getPlan(sessionName);
+  const activeStory = existingPlan.storyList.find((story) => {
+    return story.name === activeStoryName;
+  });
+  activeStory.point = finalScore;
+  activeStory.status = "Voted";
+  return existingPlan;
+};
+
+module.exports = {
+  addPlan,
+  getPlan,
+  updateStoryPointOnVoterList,
+  updateActiveVoter,
+  setStoryPoint,
+};
