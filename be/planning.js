@@ -1,6 +1,6 @@
 const planList = [];
 
-const addPlan = ({ sessionName, numOfVoters, storyList }) => {
+const addPlan = ({ sessionName, numOfVoters, stories }) => {
   if (!sessionName) {
     return { error: "Session name is required" };
   }
@@ -16,7 +16,7 @@ const addPlan = ({ sessionName, numOfVoters, storyList }) => {
     return { error: "Number of voter should be greater than 0" };
   }
 
-  if (storyList.length === 0) {
+  if (stories.length === 0) {
     return { error: "It should be at least 1 story" };
   }
 
@@ -25,7 +25,7 @@ const addPlan = ({ sessionName, numOfVoters, storyList }) => {
   );
   if (existingPlan) return { error: "This plan was created before" };
 
-  const list = storyList.map((story, index) => {
+  const storyList = stories.map((story, index) => {
     return {
       id: index + 1,
       key: index + 1,
@@ -34,9 +34,28 @@ const addPlan = ({ sessionName, numOfVoters, storyList }) => {
       status: index === 0 ? "Active" : "Not Voted",
     };
   });
-
-  const newPlan = { sessionName, numOfVoters, list };
+  const voterList = Array(numOfVoters)
+    .fill("")
+    .map((voter, index) => {
+      if (index === 0) {
+        return {
+          id: index + 1,
+          name: `Scrum Master`,
+          point: null,
+          active: true,
+        };
+      } else {
+        return {
+          id: index + 1,
+          name: `Voter ${index}`,
+          point: null,
+          active: false,
+        };
+      }
+    });
+  const newPlan = { sessionName, voterList, storyList };
   planList.push(newPlan);
+
   return { sessionName };
 };
 
@@ -52,4 +71,19 @@ const getPlan = (sessionName) => {
   return { existingPlan };
 };
 
-module.exports = { addPlan, getPlan };
+const updateVoterList = ({
+  sessionName,
+  voterName,
+  activeStoryId,
+  selectedStoryPoint,
+}) => {
+  const { existingPlan } = getPlan(sessionName);
+  const activePerson = existingPlan.voterList.find((voter) => {
+    return voter.name === voterName;
+  });
+
+  activePerson.point = selectedStoryPoint;
+  return existingPlan;
+};
+
+module.exports = { addPlan, getPlan, updateVoterList };

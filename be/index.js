@@ -3,6 +3,7 @@ const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 const router = require("./router");
+const { updateVoterList } = require("./planning");
 
 const port = 4000;
 const app = express();
@@ -16,9 +17,18 @@ app.use(router);
 io.on("connection", (socket) => {
   console.log("connect");
 
-  socket.on("test", ({ name, selectedStoryPoint }) => {
-    console.log(name, selectedStoryPoint);
-  });
+  socket.on(
+    "updateStoryPoint",
+    ({ sessionName, voterName, selectedStoryPoint, activeStoryId }) => {
+      const updated = updateVoterList({
+        sessionName,
+        voterName,
+        activeStoryId,
+        selectedStoryPoint,
+      });
+      socket.emit("updateScrumMasterPanel", updated);
+    }
+  );
 
   socket.on("disconnect", () => {
     console.log("disconnect");
