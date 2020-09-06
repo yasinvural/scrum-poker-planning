@@ -36,7 +36,7 @@ const MasterViewPlanning = () => {
   useEffect(() => {
     socket &&
       socket.on("updateScrumMasterPanel", (data) => {
-        debugger;
+        setStoryList(data.storyList);
         setVoterList(data.voterList);
       });
   });
@@ -56,8 +56,10 @@ const MasterViewPlanning = () => {
       </div>
       <div className="scrum-master-panel">
         <ScrumMasterPanel
-          name={"Scrum Master Panel"}
           activeStoryName={activeStory.name}
+          socket={socket}
+          name={"Scrum Master Panel"}
+          sessionName={params.session}
           voterList={voterList}
         />
       </div>

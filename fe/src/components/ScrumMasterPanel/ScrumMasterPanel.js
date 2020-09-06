@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import "./ScrumMasterPanel.css";
 import { Card, InputNumber, Button } from "antd";
 
-const ScrumMasterPanel = ({ activeStoryName, name, voterList }) => {
+const ScrumMasterPanel = ({
+  activeStoryName,
+  name,
+  voterList,
+  socket,
+  sessionName,
+}) => {
   const [finalScore, setFinalScore] = useState(null);
-  const handleEndVoting = () => {};
+  const handleEndVoting = () => {
+    socket.emit("setStoryPoint", { sessionName, activeStoryName, finalScore });
+  };
 
   const isVoteEnd = () => {
     return voterList.every((voter) => voter.point);
