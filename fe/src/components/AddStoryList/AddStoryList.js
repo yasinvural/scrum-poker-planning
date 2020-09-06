@@ -71,8 +71,8 @@ const AddStoryList = () => {
   };
 
   const handleStartSession = () => {
-    const arrStoryList = storyList.split("\n");
-    savePlan({ sessionName, numOfVoters, storyList: arrStoryList })
+    const stories = storyList.split("\n");
+    savePlan({ sessionName, numOfVoters, stories })
       .then((data) => {
         console.log("save planning", data);
         history.push(`/master/${data.data}`);

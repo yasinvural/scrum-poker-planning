@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./ActiveStory.css";
 import { Card } from "antd";
-import io from "socket.io-client";
 
 const storyPoints = [
   "1",
@@ -17,14 +16,18 @@ const storyPoints = [
   "134",
   "?",
 ];
-let socket;
-const ActiveStory = ({ activeStory }) => {
+
+const ActiveStory = ({ activeStory, socket, sessionName }) => {
   const [selectedStoryPoint, setSelectedStoryPoint] = useState(null);
 
   useEffect(() => {
-    socket = io("http://localhost:4000");
-    const num = Math.random() * 10 + 1;
-    socket.emit("test", { name: `Voter ${num}`, selectedStoryPoint });
+    socket &&
+      socket.emit("updateStoryPoint", {
+        sessionName,
+        voterName: `Scrum Master`,
+        selectedStoryPoint,
+        activeStoryId: activeStory.id,
+      });
   }, [selectedStoryPoint]);
 
   const handleSelectStoryPoint = (value) => {
