@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./StoryList.css";
+import "./AddStoryList.css";
 import { useHistory } from "react-router-dom";
 import { Button, Input, InputNumber } from "antd";
 import { savePlanning } from "../../services/planService";
@@ -9,7 +9,7 @@ const { TextArea } = Input;
 
 let socket;
 
-const StoryList = () => {
+const AddStoryList = () => {
   const [sessionName, setSessionName] = useState("");
   const [numOfVoters, setNumOfVoters] = useState(1);
   const [storyList, setStoryList] = useState("");
@@ -91,7 +91,7 @@ const StoryList = () => {
   };
 
   return (
-    <div className="story-list-container">
+    <div className="add-story-list-container">
       <div className="header-info">
         <div className="session-name-container">
           <div className="title">Session Name </div>
@@ -128,4 +128,4 @@ const StoryList = () => {
   );
 };
 
-export default StoryList;
+export default AddStoryList;

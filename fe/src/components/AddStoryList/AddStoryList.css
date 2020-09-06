@@ -1,0 +1,34 @@
+.add-story-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-story-list-container .header-info {
+  display: flex;
+}
+
+.add-story-list-container .header-info .session-name-container,
+.add-story-list-container .header-info .voters-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+.add-story-list-container .header-info .voters-container {
+  margin-left: 25px;
+}
+.add-story-list-container .header-info .session-name-container .title,
+.add-story-list-container .header-info .voters-container .title {
+  width: 150px;
+}
+
+.add-story-list-container .header-info .voters-container .ant-input-number {
+  width: 100%;
+}
+
+.add-story-list-container .text-area-container {
+  margin: 20px 0;
+}
+
+.add-story-list-container .start-session-button {
+  align-self: flex-end;
+}

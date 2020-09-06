@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import StoryList from "./components/StoryList/StoryList";
+import AddStoryList from "./components/AddStoryList/AddStoryList";
 import MasterViewPlanning from "./components/MasterViewPlanning/MasterViewPlanning";
 import DeveloperViewPlanning from "./components/DeveloperViewPlanning/DeveloperViewPlanning";
 import Logo from "./components/Logo/Logo";
@@ -11,7 +11,7 @@ function App() {
     <div className="app-container">
       <Logo />
       <Router>
-        <Route exact path="/" component={StoryList} />
+        <Route exact path="/" component={AddStoryList} />
         <Route path="/master" component={MasterViewPlanning} />
         <Route path="/developer" component={DeveloperViewPlanning} />
       </Router>
