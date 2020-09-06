@@ -16,8 +16,8 @@ app.use(router);
 io.on("connection", (socket) => {
   console.log("connect");
 
-  socket.on("test", ({ name }) => {
-    console.log(name);
+  socket.on("test", ({ name, selectedStoryPoint }) => {
+    console.log(name, selectedStoryPoint);
   });
 
   socket.on("disconnect", () => {
