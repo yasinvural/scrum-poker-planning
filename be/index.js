@@ -3,7 +3,7 @@ const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 const router = require("./router");
-const { updateVoterList, updateActiveVoter } = require("./planning");
+const { updateStoryPointOnVoterList, updateActiveVoter } = require("./planning");
 
 const port = 4000;
 const app = express();
@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
   socket.on(
     "updateStoryPoint",
     ({ sessionName, voterName, selectedStoryPoint, activeStoryId }) => {
-      const updated = updateVoterList({
+      const updated = updateStoryPointOnVoterList({
         sessionName,
         voterName,
         activeStoryId,

@@ -71,7 +71,7 @@ const getPlan = (sessionName) => {
   return { existingPlan };
 };
 
-const updateVoterList = ({
+const updateStoryPointOnVoterList = ({
   sessionName,
   voterName,
   activeStoryId,
@@ -95,4 +95,4 @@ const updateActiveVoter = ({ voterName, sessionName }) => {
   console.log(JSON.stringify(existingPlan));
 };
 
-module.exports = { addPlan, getPlan, updateVoterList, updateActiveVoter };
+module.exports = { addPlan, getPlan, updateStoryPointOnVoterList, updateActiveVoter };
