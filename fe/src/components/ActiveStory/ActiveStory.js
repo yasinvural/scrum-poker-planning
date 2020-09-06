@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./ActiveStory.css";
 import { Card } from "antd";
+import io from "socket.io-client";
 
 const storyPoints = [
   "1",
@@ -16,8 +17,15 @@ const storyPoints = [
   "134",
   "?",
 ];
+let socket;
 const ActiveStory = ({ activeStory }) => {
   const [selectedStoryPoint, setSelectedStoryPoint] = useState(null);
+
+  useEffect(() => {
+    socket = io("http://localhost:4000");
+    const num = Math.random() * 10 + 1;
+    socket.emit("test", { name: `Voter ${num}`, selectedStoryPoint });
+  }, [selectedStoryPoint]);
 
   const handleSelectStoryPoint = (value) => {
     setSelectedStoryPoint(value);
@@ -37,7 +45,9 @@ const ActiveStory = ({ activeStory }) => {
         ))}
       </div>
       <div className="vote-info">
-        {selectedStoryPoint ? `${selectedStoryPoint} Voted` : "Please Vote !!! "}
+        {selectedStoryPoint
+          ? `${selectedStoryPoint} Voted`
+          : "Please Vote !!! "}
       </div>
     </Card>
   );

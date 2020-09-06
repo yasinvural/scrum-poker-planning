@@ -2,9 +2,14 @@ import { get, post } from "./baseService";
 
 const baseURL = "http://localhost:4000";
 
-const savePlanning = (data) => {
-  const url = `${baseURL}/save-planning`;
+const savePlan = (data) => {
+  const url = `${baseURL}/save-plan`;
   return post(url, data);
 };
 
-export { savePlanning };
+const getPlan = (sessionName) => {
+  const url = `${baseURL}/get-plan?sessionName=${sessionName}`;
+  return get(url);
+};
+
+export { savePlan, getPlan };

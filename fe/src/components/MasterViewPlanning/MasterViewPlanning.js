@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MasterViewPlanning.css";
 import ActiveStory from "../ActiveStory/ActiveStory";
 import StoryList from "../StoryList/StoryList";
-
-const mockStoryList = [
-  { id: "1", key: "1", name: "Story1", point: null, status: "Active" },
-  { id: "2", key: "2", name: "Story2", point: null, status: "Not Voted" },
-  { id: "3", key: "3", name: "Story3", point: null, status: "Not Voted" },
-  { id: "4", key: "4", name: "Story4", point: null, status: "Not Voted" },
-  { id: "5", key: "5", name: "Story5", point: null, status: "Not Voted" },
-  { id: "6", key: "6", name: "Story5", point: null, status: "Not Voted" },
-];
+import { getPlan } from "../../services/planService";
+import { useParams, useHistory } from "react-router-dom";
 
 const MasterViewPlanning = () => {
-  const [storyList, setStoryList] = useState(mockStoryList);
-  const [activeStory, setActiveStory] = useState(mockStoryList[0]);
+  const [storyList, setStoryList] = useState([]);
+  const [activeStory, setActiveStory] = useState({});
+  const params = useParams();
+  const history = useHistory();
+
+  useEffect(() => {
+    async function getStoryList() {
+      getPlan(params.session)
+        .then((res) => {
+          setStoryList(res.data.list);
+          setActiveStory(res.data.list[0]);
+        })
+        .catch((err) => {
+          console.error(err);
+          history.push("/error");
+        });
+    }
+    getStoryList();
+  }, [params.session]);
 
   return (
     <div className="view-planning">

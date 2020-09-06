@@ -1,31 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "./AddStoryList.css";
 import { useHistory } from "react-router-dom";
-import { Button, Input, InputNumber } from "antd";
-import { savePlanning } from "../../services/planService";
-import io from "socket.io-client";
+import { Button, Input, InputNumber, message } from "antd";
+import { savePlan } from "../../services/planService";
 
 const { TextArea } = Input;
 
-let socket;
-
 const AddStoryList = () => {
-  const [sessionName, setSessionName] = useState("");
-  const [numOfVoters, setNumOfVoters] = useState(1);
-  const [storyList, setStoryList] = useState("");
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [sessionName, setSessionName] = useState("planning");
+  const [numOfVoters, setNumOfVoters] = useState(3);
+  const [storyList, setStoryList] = useState("story1\nstory2\nstory3");
+  const [isFormValid, setIsFormValid] = useState(true);
   const [isInputsValid, setIsInputsValid] = useState({
-    sessionNameValid: false,
+    sessionNameValid: true,
     numOfVotersValid: true,
-    storyListValid: false,
+    storyListValid: true,
   });
   const history = useHistory();
-
-  useEffect(() => {
-    socket = io("http://localhost:4000");
-
-    socket.emit("test", { name: "yasin" });
-  }, []);
 
   useEffect(() => {
     const {
@@ -80,13 +71,14 @@ const AddStoryList = () => {
   };
 
   const handleStartSession = () => {
-    savePlanning({ sessionName, numOfVoters, storyList })
+    const arrStoryList = storyList.split("\n");
+    savePlan({ sessionName, numOfVoters, storyList: arrStoryList })
       .then((data) => {
         console.log("save planning", data);
-        history.push("/master");
+        history.push(`/master/${data.data}`);
       })
       .catch((err) => {
-        console.error(err);
+        message.error(err.response.data);
       });
   };
 
