@@ -17,14 +17,14 @@ const storyPoints = [
   "?",
 ];
 
-const ActiveStory = ({ activeStory, socket, sessionName }) => {
+const ActiveStory = ({ activeStory, socket, sessionName, voterName }) => {
   const [selectedStoryPoint, setSelectedStoryPoint] = useState(null);
 
   useEffect(() => {
     socket &&
       socket.emit("updateStoryPoint", {
         sessionName,
-        voterName: `Scrum Master`,
+        voterName,
         selectedStoryPoint,
         activeStoryId: activeStory.id,
       });

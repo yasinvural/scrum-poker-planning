@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./MasterViewPlanning.css";
 import ActiveStory from "../ActiveStory/ActiveStory";
 import StoryList from "../StoryList/StoryList";
+import ScrumMasterPanel from "../ScrumMasterPanel/ScrumMasterPanel";
 import { getPlan } from "../../services/planService";
 import { message } from "antd";
 import { useParams, useHistory } from "react-router-dom";
@@ -10,6 +11,7 @@ import io from "socket.io-client";
 const MasterViewPlanning = () => {
   const [storyList, setStoryList] = useState([]);
   const [activeStory, setActiveStory] = useState({});
+  const [voterList, setVoterList] = useState([]);
   const [socket, setSocket] = useState(null);
   const params = useParams();
   const history = useHistory();
@@ -20,6 +22,7 @@ const MasterViewPlanning = () => {
         .then((res) => {
           setStoryList(res.data.storyList);
           setActiveStory(res.data.storyList[0]);
+          setVoterList(res.data.voterList);
         })
         .catch((err) => {
           message.error(err.response.data);
@@ -33,7 +36,8 @@ const MasterViewPlanning = () => {
   useEffect(() => {
     socket &&
       socket.on("updateScrumMasterPanel", (data) => {
-        setStoryList(data.storyList);
+        debugger;
+        setVoterList(data.voterList);
       });
   });
 
@@ -47,9 +51,16 @@ const MasterViewPlanning = () => {
           activeStory={activeStory}
           socket={socket}
           sessionName={params.session}
+          voterName={"Scrum Master"}
         />
       </div>
-      <div className="scrum-master-panel">Scrum Master Panel</div>
+      <div className="scrum-master-panel">
+        <ScrumMasterPanel
+          name={"Scrum Master Panel"}
+          activeStoryName={activeStory.name}
+          voterList={voterList}
+        />
+      </div>
     </div>
   );
 };

@@ -1,0 +1,13 @@
+.scrum-master-panel-container{
+
+}
+
+.scrum-master-panel-container .voter-list-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.scrum-master-panel-container .voter-list-container .voter-name-container{
+    display: flex;
+    
+}
