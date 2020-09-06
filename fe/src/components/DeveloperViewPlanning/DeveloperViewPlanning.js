@@ -22,7 +22,7 @@ const DeveloperViewPlanning = () => {
           setStoryList(res.data.storyList);
           setActiveStory(res.data.storyList[0]);
           const voter = res.data.voterList.find((voter) => !voter.active);
-          setVoterName(voter.name);
+          voter && setVoterName(voter.name);
         })
         .catch((err) => {
           message.error(err.response.data);
@@ -35,7 +35,10 @@ const DeveloperViewPlanning = () => {
 
   useEffect(() => {
     socket &&
-      socket.emit("updateActiveVoter", {voterName, sessionName:params.session});
+      socket.emit("updateActiveVoter", {
+        voterName,
+        sessionName: params.session,
+      });
   });
 
   return (
@@ -43,14 +46,16 @@ const DeveloperViewPlanning = () => {
       <div className="story-list">
         <StoryList storyList={storyList} />
       </div>
-      <div className="active-story">
-        <ActiveStory
-          activeStory={activeStory}
-          socket={socket}
-          sessionName={params.session}
-          voterName={voterName}
-        />
-      </div>
+      {voterName && (
+        <div className="active-story">
+          <ActiveStory
+            activeStory={activeStory}
+            socket={socket}
+            sessionName={params.session}
+            voterName={voterName}
+          />
+        </div>
+      )}
     </div>
   );
 };
