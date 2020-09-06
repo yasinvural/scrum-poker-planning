@@ -7,7 +7,7 @@ const ScrumMasterPanel = ({ activeStoryName, name, voterList }) => {
   const handleEndVoting = () => {};
 
   const isVoteEnd = () => {
-    return voterList.every((voter) => !voter.point);
+    return voterList.every((voter) => voter.point);
   };
 
   return (
@@ -22,7 +22,7 @@ const ScrumMasterPanel = ({ activeStoryName, name, voterList }) => {
           </div>
         ))}
       </div>
-      {!isVoteEnd() && (
+      {isVoteEnd() && (
         <div className="final-score">
           <div className="text">Final Score</div>
           <div className="input">
@@ -34,7 +34,7 @@ const ScrumMasterPanel = ({ activeStoryName, name, voterList }) => {
       <div className="end-voting-button">
         <Button
           type="primary"
-          disabled={isVoteEnd() || !finalScore}
+          disabled={!isVoteEnd() || !finalScore}
           onClick={handleEndVoting}
         >
           End Voting For {activeStoryName}
