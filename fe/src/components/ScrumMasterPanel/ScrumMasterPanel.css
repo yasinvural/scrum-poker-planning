@@ -1,13 +1,31 @@
-.scrum-master-panel-container{
-
+.scrum-master-panel-container {
 }
 
-.scrum-master-panel-container .voter-list-container{
-    display: flex;
-    flex-direction: column;
+.scrum-master-panel-container .status {
+  margin-bottom: 20px;
+}
+.scrum-master-panel-container .final-score {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.scrum-master-panel-container .voter-list-container .voter-name-container{
-    display: flex;
-    
+.scrum-master-panel-container .end-voting-button {
+  text-align: center;
+}
+
+.scrum-master-panel-container .voter-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrum-master-panel-container .voter-list-container .voter-name-container {
+  display: flex;
+  margin: 10px 0;
+}
+
+.scrum-master-panel-container
+  .voter-list-container
+  .voter-name-container
+  .column {
+  margin: 0 5px;
 }
