@@ -10,6 +10,7 @@ import io from "socket.io-client";
 const DeveloperViewPlanning = () => {
   const [storyList, setStoryList] = useState([]);
   const [activeStory, setActiveStory] = useState({});
+  const [voterName, setVoterName] = useState("");
   const [socket, setSocket] = useState(null);
   const params = useParams();
   const history = useHistory();
@@ -20,6 +21,8 @@ const DeveloperViewPlanning = () => {
         .then((res) => {
           setStoryList(res.data.storyList);
           setActiveStory(res.data.storyList[0]);
+          const voter = res.data.voterList.find((voter) => !voter.active);
+          setVoterName(voter.name);
         })
         .catch((err) => {
           message.error(err.response.data);
@@ -29,6 +32,11 @@ const DeveloperViewPlanning = () => {
     getStoryList();
     setSocket(io("http://localhost:4000"));
   }, [params.session]);
+
+  useEffect(() => {
+    socket &&
+      socket.emit("updateActiveVoter", {voterName, sessionName:params.session});
+  });
 
   return (
     <div className="developer-view-planning">
@@ -40,7 +48,7 @@ const DeveloperViewPlanning = () => {
           activeStory={activeStory}
           socket={socket}
           sessionName={params.session}
-          voterName={`Voter 1`}
+          voterName={voterName}
         />
       </div>
     </div>
