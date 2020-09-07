@@ -21,7 +21,10 @@ const MasterViewPlanning = () => {
       getPlanBySessionName(params.session)
         .then((res) => {
           setStoryList(res.data.storyList);
-          setActiveStory(res.data.storyList[0]);
+          const activeStory = res.data.storyList.find(
+            (story) => story.status === "Active"
+          );
+          setActiveStory(activeStory);
           setVoterList(res.data.voterList);
         })
         .catch((err) => {

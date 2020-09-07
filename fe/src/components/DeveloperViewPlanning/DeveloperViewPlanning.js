@@ -20,7 +20,10 @@ const DeveloperViewPlanning = () => {
       getPlanBySessionName(params.session)
         .then((res) => {
           setStoryList(res.data.storyList);
-          setActiveStory(res.data.storyList[0]);
+          const activeStory = res.data.storyList.find(
+            (story) => story.status === "Active"
+          );
+          setActiveStory(activeStory);
           const voter = res.data.voterList.find((voter) => !voter.active);
           voter && setVoterName(voter.name);
         })
