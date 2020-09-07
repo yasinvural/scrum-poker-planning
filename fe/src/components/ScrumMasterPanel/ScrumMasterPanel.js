@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ScrumMasterPanel.css";
 import { Card, InputNumber, Button } from "antd";
+import {status} from '../../constants/status';
 
 const ScrumMasterPanel = ({
   activeStoryName,
@@ -26,7 +27,7 @@ const ScrumMasterPanel = ({
           <div className="voter-name-container" key={voter.name}>
             <div>{voter.name}</div>
             <div className="column">:</div>
-            <div>{voter.point || "Not Voted"}</div>
+            <div>{voter.point || status.NOT_VOTED}</div>
           </div>
         ))}
       </div>

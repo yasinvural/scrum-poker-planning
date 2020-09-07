@@ -6,6 +6,7 @@ import ScrumMasterPanel from "../ScrumMasterPanel/ScrumMasterPanel";
 import { getPlanBySessionName } from "../../services/planService";
 import { message } from "antd";
 import { useParams, useHistory } from "react-router-dom";
+import { status } from "../../constants/status";
 import io from "socket.io-client";
 
 const MasterViewPlanning = () => {
@@ -22,7 +23,7 @@ const MasterViewPlanning = () => {
         .then((res) => {
           setStoryList(res.data.storyList);
           const activeStory = res.data.storyList.find(
-            (story) => story.status === "Active"
+            (story) => story.status === status.ACTIVE
           );
           setActiveStory(activeStory);
           setVoterList(res.data.voterList);

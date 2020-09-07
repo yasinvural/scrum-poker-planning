@@ -5,6 +5,7 @@ import StoryList from "../StoryList/StoryList";
 import { getPlanBySessionName } from "../../services/planService";
 import { message } from "antd";
 import { useParams, useHistory } from "react-router-dom";
+import { status } from "../../constants/status";
 import io from "socket.io-client";
 
 const DeveloperViewPlanning = () => {
@@ -21,7 +22,7 @@ const DeveloperViewPlanning = () => {
         .then((res) => {
           setStoryList(res.data.storyList);
           const activeStory = res.data.storyList.find(
-            (story) => story.status === "Active"
+            (story) => story.status === status.ACTIVE
           );
           setActiveStory(activeStory);
           const voter = res.data.voterList.find((voter) => !voter.active);
