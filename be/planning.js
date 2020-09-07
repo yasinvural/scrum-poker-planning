@@ -1,6 +1,6 @@
 const planList = [];
 
-const addPlan = ({ sessionName, numOfVoters, stories }) => {
+const createPlan = ({ sessionName, numOfVoters, stories }) => {
   if (!sessionName) {
     return { error: "Session name is required" };
   }
@@ -59,7 +59,7 @@ const addPlan = ({ sessionName, numOfVoters, stories }) => {
   return { sessionName };
 };
 
-const getPlan = (sessionName) => {
+const getPlanBySessionName = (sessionName) => {
   if (!sessionName) {
     return { error: "Session name is required" };
   }
@@ -77,7 +77,7 @@ const updateStoryPointOnVoterList = ({
   activeStoryId,
   selectedStoryPoint,
 }) => {
-  const { existingPlan } = getPlan(sessionName);
+  const { existingPlan } = getPlanBySessionName(sessionName);
   const activePerson = existingPlan.voterList.find((voter) => {
     return voter.name === voterName;
   });
@@ -87,7 +87,7 @@ const updateStoryPointOnVoterList = ({
 };
 
 const updateActiveVoter = ({ voterName, sessionName }) => {
-  const { existingPlan } = getPlan(sessionName);
+  const { existingPlan } = getPlanBySessionName(sessionName);
   const person = existingPlan.voterList.find((voter) => {
     return voter.name === voterName;
   });
@@ -95,7 +95,7 @@ const updateActiveVoter = ({ voterName, sessionName }) => {
 };
 
 const setStoryPoint = ({ sessionName, activeStoryName, finalScore }) => {
-  const { existingPlan } = getPlan(sessionName);
+  const { existingPlan } = getPlanBySessionName(sessionName);
   const activeStory = existingPlan.storyList.find((story) => {
     return story.name === activeStoryName;
   });
@@ -105,8 +105,8 @@ const setStoryPoint = ({ sessionName, activeStoryName, finalScore }) => {
 };
 
 module.exports = {
-  addPlan,
-  getPlan,
+  createPlan,
+  getPlanBySessionName,
   updateStoryPointOnVoterList,
   updateActiveVoter,
   setStoryPoint,
