@@ -13,6 +13,7 @@ const MasterViewPlanning = () => {
   const [storyList, setStoryList] = useState([]);
   const [activeStory, setActiveStory] = useState({});
   const [voterList, setVoterList] = useState([]);
+  const [isCompleted, setIsCompleted] = useState(false);
   const [socket, setSocket] = useState(io("http://localhost:4000"));
   const params = useParams();
   const history = useHistory();
@@ -42,34 +43,45 @@ const MasterViewPlanning = () => {
       const activeStory = data.storyList.find(
         (story) => story.status === status.ACTIVE
       );
+      const isCompleted = data.storyList.every(
+        (story) => story.status === status.VOTED
+      );
+      setIsCompleted(isCompleted);
       activeStory && setActiveStory(activeStory);
       setVoterList(data.voterList);
     });
   }, [socket]);
 
   return (
-    <div className="view-planning">
-      <div className="story-list">
-        <StoryList storyList={storyList} />
+    <>
+      <div
+        className={isCompleted ? "view-planning completed" : "view-planning"}
+      >
+        <div className="story-list">
+          <StoryList storyList={storyList} />
+        </div>
+        <div className="active-story">
+          <ActiveStory
+            activeStory={activeStory}
+            socket={socket}
+            sessionName={params.session}
+            voterName={"Scrum Master"}
+          />
+        </div>
+        <div className="scrum-master-panel">
+          <ScrumMasterPanel
+            activeStoryName={activeStory.name}
+            socket={socket}
+            name={"Scrum Master Panel"}
+            sessionName={params.session}
+            voterList={voterList}
+          />
+        </div>
       </div>
-      <div className="active-story">
-        <ActiveStory
-          activeStory={activeStory}
-          socket={socket}
-          sessionName={params.session}
-          voterName={"Scrum Master"}
-        />
-      </div>
-      <div className="scrum-master-panel">
-        <ScrumMasterPanel
-          activeStoryName={activeStory.name}
-          socket={socket}
-          name={"Scrum Master Panel"}
-          sessionName={params.session}
-          voterList={voterList}
-        />
-      </div>
-    </div>
+      {isCompleted && (
+        <div className="completed-text">{params.session} is completed !</div>
+      )}
+    </>
   );
 };
 

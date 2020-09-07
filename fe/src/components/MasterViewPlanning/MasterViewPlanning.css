@@ -1,6 +1,10 @@
 .view-planning {
   display: flex;
 }
+.view-planning.completed {
+  pointer-events: none;
+  opacity: 0.5;
+}
 
 .view-planning .story-list {
   flex: 0.5;
@@ -12,4 +16,8 @@
 }
 .view-planning .active-story {
   margin: 0 25px;
+}
+
+.completed-text{
+  text-align: center;
 }

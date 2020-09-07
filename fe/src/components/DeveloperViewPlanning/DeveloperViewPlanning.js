@@ -12,6 +12,7 @@ const DeveloperViewPlanning = () => {
   const [storyList, setStoryList] = useState([]);
   const [activeStory, setActiveStory] = useState({});
   const [voterName, setVoterName] = useState("");
+  const [isCompleted, setIsCompleted] = useState(false);
   const [socket, setSocket] = useState(io("http://localhost:4000"));
   const params = useParams();
   const history = useHistory();
@@ -49,26 +50,41 @@ const DeveloperViewPlanning = () => {
       const activeStory = data.storyList.find(
         (story) => story.status === status.ACTIVE
       );
+      const isCompleted = data.storyList.every(
+        (story) => story.status === status.VOTED
+      );
+      setIsCompleted(isCompleted);
       activeStory && setActiveStory(activeStory);
     });
   }, [socket]);
 
   return (
-    <div className="developer-view-planning">
-      <div className="story-list">
-        <StoryList storyList={storyList} />
-      </div>
-      {voterName && (
-        <div className="active-story">
-          <ActiveStory
-            activeStory={activeStory}
-            socket={socket}
-            sessionName={params.session}
-            voterName={voterName}
-          />
+    <>
+      <div
+        className={
+          isCompleted
+            ? "developer-view-planning completed"
+            : "developer-view-planning"
+        }
+      >
+        <div className="story-list">
+          <StoryList storyList={storyList} />
         </div>
+        {voterName && (
+          <div className="active-story">
+            <ActiveStory
+              activeStory={activeStory}
+              socket={socket}
+              sessionName={params.session}
+              voterName={voterName}
+            />
+          </div>
+        )}
+      </div>
+      {isCompleted && (
+        <div className="completed-text">{params.session} is completed !</div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -2,6 +2,11 @@
   display: flex;
 }
 
+.developer-view-planning.completed {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .developer-view-planning .story-list {
   flex: 0.75;
 }
@@ -9,4 +14,8 @@
 .developer-view-planning .active-story {
   flex: 0.25;
   margin: 0 25px;
+}
+
+.completed-text {
+  text-align: center;
 }
