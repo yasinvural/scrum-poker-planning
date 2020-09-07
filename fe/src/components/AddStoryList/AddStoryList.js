@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AddStoryList.css";
 import { useHistory } from "react-router-dom";
 import { Button, Input, InputNumber, message } from "antd";
-import { savePlan } from "../../services/planService";
+import { createPlan } from "../../services/planService";
 
 const { TextArea } = Input;
 
@@ -72,9 +72,8 @@ const AddStoryList = () => {
 
   const handleStartSession = () => {
     const stories = storyList.split("\n");
-    savePlan({ sessionName, numOfVoters, stories })
+    createPlan({ sessionName, numOfVoters, stories })
       .then((data) => {
-        console.log("save planning", data);
         history.push(`/master/${data.data}`);
       })
       .catch((err) => {

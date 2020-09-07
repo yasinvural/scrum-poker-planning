@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./DeveloperViewPlanning.css";
 import ActiveStory from "../ActiveStory/ActiveStory";
 import StoryList from "../StoryList/StoryList";
-import { getPlan } from "../../services/planService";
+import { getPlanBySessionName } from "../../services/planService";
 import { message } from "antd";
 import { useParams, useHistory } from "react-router-dom";
 import io from "socket.io-client";
@@ -17,7 +17,7 @@ const DeveloperViewPlanning = () => {
 
   useEffect(() => {
     async function getStoryList() {
-      getPlan(params.session)
+      getPlanBySessionName(params.session)
         .then((res) => {
           setStoryList(res.data.storyList);
           setActiveStory(res.data.storyList[0]);

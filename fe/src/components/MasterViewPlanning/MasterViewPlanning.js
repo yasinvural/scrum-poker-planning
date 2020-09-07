@@ -3,7 +3,7 @@ import "./MasterViewPlanning.css";
 import ActiveStory from "../ActiveStory/ActiveStory";
 import StoryList from "../StoryList/StoryList";
 import ScrumMasterPanel from "../ScrumMasterPanel/ScrumMasterPanel";
-import { getPlan } from "../../services/planService";
+import { getPlanBySessionName } from "../../services/planService";
 import { message } from "antd";
 import { useParams, useHistory } from "react-router-dom";
 import io from "socket.io-client";
@@ -18,7 +18,7 @@ const MasterViewPlanning = () => {
 
   useEffect(() => {
     async function getStoryList() {
-      getPlan(params.session)
+      getPlanBySessionName(params.session)
         .then((res) => {
           setStoryList(res.data.storyList);
           setActiveStory(res.data.storyList[0]);
