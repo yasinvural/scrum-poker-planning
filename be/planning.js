@@ -102,6 +102,17 @@ const setFinalStoryPoint = ({ sessionName, activeStoryName, finalScore }) => {
   });
   activeStory.point = finalScore;
   activeStory.status = status.VOTED;
+  const nextStory = existingPlan.storyList.find((story) => {
+    return story.status === status.NOT_VOTED;
+  });
+
+  for (let voter of existingPlan.voterList) {
+    voter.point = null;
+  }
+
+  if (nextStory) {
+    nextStory.status = status.ACTIVE;
+  }
   return existingPlan;
 };
 
