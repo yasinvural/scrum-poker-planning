@@ -1,3 +1,9 @@
+const status = {
+  ACTIVE: "Active",
+  NOT_VOTED: "Not Voted",
+  VOTED: "Voted",
+};
+
 const planList = [];
 
 const createPlan = ({ sessionName, numOfVoters, stories }) => {
@@ -31,7 +37,7 @@ const createPlan = ({ sessionName, numOfVoters, stories }) => {
       key: index + 1,
       name: story,
       point: null,
-      status: index === 0 ? "Active" : "Not Voted",
+      status: index === 0 ? status.ACTIVE : status.NOT_VOTED,
     };
   });
   const voterList = Array(numOfVoters)
@@ -71,11 +77,7 @@ const getPlanBySessionName = (sessionName) => {
   return { existingPlan };
 };
 
-const updateStoryPoint = ({
-  sessionName,
-  voterName,
-  selectedStoryPoint,
-}) => {
+const updateStoryPoint = ({ sessionName, voterName, selectedStoryPoint }) => {
   const { existingPlan } = getPlanBySessionName(sessionName);
   const activePerson = existingPlan.voterList.find((voter) => {
     return voter.name === voterName;
@@ -99,7 +101,7 @@ const setFinalStoryPoint = ({ sessionName, activeStoryName, finalScore }) => {
     return story.name === activeStoryName;
   });
   activeStory.point = finalScore;
-  activeStory.status = "Voted";
+  activeStory.status = status.VOTED;
   return existingPlan;
 };
 
