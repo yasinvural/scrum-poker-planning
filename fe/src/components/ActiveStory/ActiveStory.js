@@ -26,7 +26,6 @@ const ActiveStory = ({ activeStory, socket, sessionName, voterName }) => {
         sessionName,
         voterName,
         selectedStoryPoint,
-        activeStoryId: activeStory.id,
       });
   }, [selectedStoryPoint]);
 

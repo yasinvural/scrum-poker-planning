@@ -17,7 +17,7 @@ const MasterViewPlanning = () => {
   const history = useHistory();
 
   useEffect(() => {
-    async function getStoryList() {
+    async function fetchPlan() {
       getPlanBySessionName(params.session)
         .then((res) => {
           setStoryList(res.data.storyList);
@@ -29,7 +29,7 @@ const MasterViewPlanning = () => {
           history.push("/error");
         });
     }
-    getStoryList();
+    fetchPlan();
     setSocket(io("http://localhost:4000"));
   }, [params.session]);
 

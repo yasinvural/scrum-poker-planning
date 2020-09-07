@@ -11,7 +11,7 @@ const ScrumMasterPanel = ({
 }) => {
   const [finalScore, setFinalScore] = useState(null);
   const handleEndVoting = () => {
-    socket.emit("setStoryPoint", { sessionName, activeStoryName, finalScore });
+    socket.emit("setFinalStoryPoint", { sessionName, activeStoryName, finalScore });
   };
 
   const isVoteEnd = () => {
