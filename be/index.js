@@ -30,8 +30,7 @@ io.on("connection", (socket) => {
         selectedStoryPoint,
       });
 
-      socket.emit("updateScrumMasterPanel", updated);
-      socket.broadcast.emit("updateScrumMasterPanel", updated);
+      io.emit("updateScrumMasterPanel", updated);
     }
   );
 
@@ -41,11 +40,17 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("setFinalStoryPoint", ({ sessionName, activeStoryName, finalScore }) => {
-    const updated = setFinalStoryPoint({ sessionName, activeStoryName, finalScore });
-    socket.emit("updateScrumMasterPanel", updated);
-    socket.broadcast.emit("updateScrumMasterPanel", updated);
-  });
+  socket.on(
+    "setFinalStoryPoint",
+    ({ sessionName, activeStoryName, finalScore }) => {
+      const updated = setFinalStoryPoint({
+        sessionName,
+        activeStoryName,
+        finalScore,
+      });
+      io.emit("updateScrumMasterPanel", updated);
+    }
+  );
 
   socket.on("disconnect", () => {
     console.log("disconnect");
