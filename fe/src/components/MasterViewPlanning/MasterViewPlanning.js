@@ -6,14 +6,14 @@ import ScrumMasterPanel from "../ScrumMasterPanel/ScrumMasterPanel";
 import { getPlanBySessionName } from "../../services/planService";
 import { message } from "antd";
 import { useParams, useHistory } from "react-router-dom";
-import { status } from "../../constants/status";
+import { status } from "../../utils/constants";
 import io from "socket.io-client";
 
 const MasterViewPlanning = () => {
   const [storyList, setStoryList] = useState([]);
   const [activeStory, setActiveStory] = useState({});
   const [voterList, setVoterList] = useState([]);
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState(io("http://localhost:4000"));
   const params = useParams();
   const history = useHistory();
 
@@ -34,20 +34,18 @@ const MasterViewPlanning = () => {
         });
     }
     fetchPlan();
-    setSocket(io("http://localhost:4000"));
   }, [params.session]);
 
   useEffect(() => {
-    socket &&
-      socket.on("updateScrumMasterPanel", (data) => {
-        setStoryList(data.storyList);
-        const activeStory = data.storyList.find(
-          (story) => story.status === status.ACTIVE
-        );
-        activeStory && setActiveStory(activeStory);
-        setVoterList(data.voterList);
-      });
-  });
+    socket.on("updateScrumMasterPanel", (data) => {
+      setStoryList(data.storyList);
+      const activeStory = data.storyList.find(
+        (story) => story.status === status.ACTIVE
+      );
+      activeStory && setActiveStory(activeStory);
+      setVoterList(data.voterList);
+    });
+  }, [socket]);
 
   return (
     <div className="view-planning">

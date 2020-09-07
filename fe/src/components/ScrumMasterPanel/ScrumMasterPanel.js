@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ScrumMasterPanel.css";
 import { Card, InputNumber, Button } from "antd";
-import { status } from "../../constants/status";
+import { status } from "../../utils/constants";
 
 const ScrumMasterPanel = ({
   activeStoryName,

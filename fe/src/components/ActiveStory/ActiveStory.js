@@ -25,12 +25,11 @@ const ActiveStory = ({ activeStory, socket, sessionName, voterName }) => {
   }, [activeStory.name]);
 
   useEffect(() => {
-    socket &&
-      socket.emit("updateStoryPoint", {
-        sessionName,
-        voterName,
-        selectedStoryPoint,
-      });
+    socket.emit("updateStoryPoint", {
+      sessionName,
+      voterName,
+      selectedStoryPoint,
+    });
   }, [selectedStoryPoint]);
 
   const handleSelectStoryPoint = (value) => {

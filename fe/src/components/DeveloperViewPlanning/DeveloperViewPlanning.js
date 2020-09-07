@@ -5,14 +5,14 @@ import StoryList from "../StoryList/StoryList";
 import { getPlanBySessionName } from "../../services/planService";
 import { message } from "antd";
 import { useParams, useHistory } from "react-router-dom";
-import { status } from "../../constants/status";
+import { status } from "../../utils/constants";
 import io from "socket.io-client";
 
 const DeveloperViewPlanning = () => {
   const [storyList, setStoryList] = useState([]);
   const [activeStory, setActiveStory] = useState({});
   const [voterName, setVoterName] = useState("");
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState(io("http://localhost:4000"));
   const params = useParams();
   const history = useHistory();
 
@@ -34,27 +34,24 @@ const DeveloperViewPlanning = () => {
         });
     }
     fetchPlan();
-    setSocket(io("http://localhost:4000"));
   }, [params.session]);
 
   useEffect(() => {
-    socket &&
-      socket.emit("updateActiveVoter", {
-        voterName,
-        sessionName: params.session,
-      });
+    socket.emit("updateActiveVoter", {
+      voterName,
+      sessionName: params.session,
+    });
   });
 
   useEffect(() => {
-    socket &&
-      socket.on("updateScrumMasterPanel", (data) => {
-        setStoryList(data.storyList);
-        const activeStory = data.storyList.find(
-          (story) => story.status === status.ACTIVE
-        );
-        activeStory && setActiveStory(activeStory);
-      });
-  });
+    socket.on("updateScrumMasterPanel", (data) => {
+      setStoryList(data.storyList);
+      const activeStory = data.storyList.find(
+        (story) => story.status === status.ACTIVE
+      );
+      activeStory && setActiveStory(activeStory);
+    });
+  }, [socket]);
 
   return (
     <div className="developer-view-planning">
