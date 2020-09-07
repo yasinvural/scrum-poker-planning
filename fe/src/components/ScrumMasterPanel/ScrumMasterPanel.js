@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ScrumMasterPanel.css";
 import { Card, InputNumber, Button } from "antd";
-import {status} from '../../constants/status';
+import { status } from "../../constants/status";
 
 const ScrumMasterPanel = ({
   activeStoryName,
@@ -12,7 +12,12 @@ const ScrumMasterPanel = ({
 }) => {
   const [finalScore, setFinalScore] = useState(null);
   const handleEndVoting = () => {
-    socket.emit("setFinalStoryPoint", { sessionName, activeStoryName, finalScore });
+    socket.emit("setFinalStoryPoint", {
+      sessionName,
+      activeStoryName,
+      finalScore,
+    });
+    setFinalScore(null);
   };
 
   const isVoteEnd = () => {

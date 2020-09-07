@@ -25,7 +25,7 @@ const MasterViewPlanning = () => {
           const activeStory = res.data.storyList.find(
             (story) => story.status === status.ACTIVE
           );
-          setActiveStory(activeStory);
+          activeStory && setActiveStory(activeStory);
           setVoterList(res.data.voterList);
         })
         .catch((err) => {
@@ -41,6 +41,10 @@ const MasterViewPlanning = () => {
     socket &&
       socket.on("updateScrumMasterPanel", (data) => {
         setStoryList(data.storyList);
+        const activeStory = data.storyList.find(
+          (story) => story.status === status.ACTIVE
+        );
+        activeStory && setActiveStory(activeStory);
         setVoterList(data.voterList);
       });
   });

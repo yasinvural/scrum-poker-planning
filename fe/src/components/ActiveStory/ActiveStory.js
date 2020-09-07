@@ -21,6 +21,10 @@ const ActiveStory = ({ activeStory, socket, sessionName, voterName }) => {
   const [selectedStoryPoint, setSelectedStoryPoint] = useState(null);
 
   useEffect(() => {
+    setSelectedStoryPoint(null);
+  }, [activeStory.name]);
+
+  useEffect(() => {
     socket &&
       socket.emit("updateStoryPoint", {
         sessionName,
