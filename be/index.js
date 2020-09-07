@@ -4,9 +4,9 @@ const http = require("http");
 const cors = require("cors");
 const router = require("./router");
 const {
-  updateStoryPointOnVoterList,
+  updateStoryPoint,
   updateActiveVoter,
-  setStoryPoint,
+  setFinalStoryPoint,
 } = require("./planning");
 
 const port = 4000;
@@ -23,11 +23,10 @@ io.on("connection", (socket) => {
 
   socket.on(
     "updateStoryPoint",
-    ({ sessionName, voterName, selectedStoryPoint, activeStoryId }) => {
-      const updated = updateStoryPointOnVoterList({
+    ({ sessionName, voterName, selectedStoryPoint }) => {
+      const updated = updateStoryPoint({
         sessionName,
         voterName,
-        activeStoryId,
         selectedStoryPoint,
       });
 
@@ -42,8 +41,8 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("setStoryPoint", ({ sessionName, activeStoryName, finalScore }) => {
-    const updated = setStoryPoint({ sessionName, activeStoryName, finalScore });
+  socket.on("setFinalStoryPoint", ({ sessionName, activeStoryName, finalScore }) => {
+    const updated = setFinalStoryPoint({ sessionName, activeStoryName, finalScore });
     socket.emit("updateScrumMasterPanel", updated);
     socket.broadcast.emit("updateScrumMasterPanel", updated);
   });

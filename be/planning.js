@@ -71,10 +71,9 @@ const getPlanBySessionName = (sessionName) => {
   return { existingPlan };
 };
 
-const updateStoryPointOnVoterList = ({
+const updateStoryPoint = ({
   sessionName,
   voterName,
-  activeStoryId,
   selectedStoryPoint,
 }) => {
   const { existingPlan } = getPlanBySessionName(sessionName);
@@ -94,7 +93,7 @@ const updateActiveVoter = ({ voterName, sessionName }) => {
   person.active = true;
 };
 
-const setStoryPoint = ({ sessionName, activeStoryName, finalScore }) => {
+const setFinalStoryPoint = ({ sessionName, activeStoryName, finalScore }) => {
   const { existingPlan } = getPlanBySessionName(sessionName);
   const activeStory = existingPlan.storyList.find((story) => {
     return story.name === activeStoryName;
@@ -107,7 +106,7 @@ const setStoryPoint = ({ sessionName, activeStoryName, finalScore }) => {
 module.exports = {
   createPlan,
   getPlanBySessionName,
-  updateStoryPointOnVoterList,
+  updateStoryPoint,
   updateActiveVoter,
-  setStoryPoint,
+  setFinalStoryPoint,
 };
