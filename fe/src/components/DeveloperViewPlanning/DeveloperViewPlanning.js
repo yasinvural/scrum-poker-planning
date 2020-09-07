@@ -45,6 +45,17 @@ const DeveloperViewPlanning = () => {
       });
   });
 
+  useEffect(() => {
+    socket &&
+      socket.on("updateScrumMasterPanel", (data) => {
+        setStoryList(data.storyList);
+        const activeStory = data.storyList.find(
+          (story) => story.status === status.ACTIVE
+        );
+        activeStory && setActiveStory(activeStory);
+      });
+  });
+
   return (
     <div className="developer-view-planning">
       <div className="story-list">
