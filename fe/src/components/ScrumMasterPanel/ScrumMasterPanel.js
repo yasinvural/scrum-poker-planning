@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import "./ScrumMasterPanel.css";
 import { Card, InputNumber, Button } from "antd";
 import { status } from "../../utils/constants";
@@ -20,9 +20,10 @@ const ScrumMasterPanel = ({
     setFinalScore(null);
   };
 
-  const isVoteEnd = () => {
+  const isVoteEnd = useMemo(() => {
+    console.log(voterList.every((voter) => voter.point));
     return voterList.every((voter) => voter.point);
-  };
+  });
 
   return (
     <Card className="scrum-master-panel-container" title={name}>
@@ -32,11 +33,17 @@ const ScrumMasterPanel = ({
           <div className="voter-name-container" key={voter.name}>
             <div>{voter.name}</div>
             <div className="column">:</div>
-            <div>{voter.point || status.NOT_VOTED}</div>
+            <div>
+              {isVoteEnd
+                ? voter.point
+                : voter.point
+                ? status.VOTED
+                : status.NOT_VOTED}
+            </div>
           </div>
         ))}
       </div>
-      {isVoteEnd() && (
+      {isVoteEnd && (
         <div className="final-score">
           <div className="text">Final Score</div>
           <div className="input">
@@ -48,7 +55,7 @@ const ScrumMasterPanel = ({
       <div className="end-voting-button">
         <Button
           type="primary"
-          disabled={!isVoteEnd() || !finalScore}
+          disabled={!isVoteEnd || !finalScore}
           onClick={handleEndVoting}
         >
           End Voting For {activeStoryName}

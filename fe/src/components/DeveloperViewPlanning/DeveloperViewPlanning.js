@@ -13,9 +13,13 @@ const DeveloperViewPlanning = () => {
   const [activeStory, setActiveStory] = useState({});
   const [voterName, setVoterName] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
-  const [socket, setSocket] = useState(io("http://localhost:4000"));
+  const [socket, setSocket] = useState();
   const params = useParams();
   const history = useHistory();
+
+  useEffect(() => {
+    setSocket(io("http://localhost:4000"));
+  }, []);
 
   useEffect(() => {
     async function fetchPlan() {
@@ -38,24 +42,26 @@ const DeveloperViewPlanning = () => {
   }, [params.session]);
 
   useEffect(() => {
-    socket.emit("updateActiveVoter", {
-      voterName,
-      sessionName: params.session,
-    });
+    socket &&
+      socket.emit("updateActiveVoter", {
+        voterName,
+        sessionName: params.session,
+      });
   });
 
   useEffect(() => {
-    socket.on("updateScrumMasterPanel", (data) => {
-      setStoryList(data.storyList);
-      const activeStory = data.storyList.find(
-        (story) => story.status === status.ACTIVE
-      );
-      const isCompleted = data.storyList.every(
-        (story) => story.status === status.VOTED
-      );
-      setIsCompleted(isCompleted);
-      activeStory && setActiveStory(activeStory);
-    });
+    socket &&
+      socket.on("updateScrumMasterPanel", (data) => {
+        setStoryList(data.storyList);
+        const activeStory = data.storyList.find(
+          (story) => story.status === status.ACTIVE
+        );
+        const isCompleted = data.storyList.every(
+          (story) => story.status === status.VOTED
+        );
+        setIsCompleted(isCompleted);
+        activeStory && setActiveStory(activeStory);
+      });
   }, [socket]);
 
   return (
