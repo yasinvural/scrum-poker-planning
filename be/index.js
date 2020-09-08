@@ -7,6 +7,7 @@ const {
   updateStoryPoint,
   updateActiveVoter,
   setFinalStoryPoint,
+  getPlanBySessionName,
 } = require("./planning");
 
 const port = 4000;
@@ -51,6 +52,12 @@ io.on("connection", (socket) => {
       io.emit("updateScrumMasterPanel", updated);
     }
   );
+
+  // setInterval(() => {
+  //   //TODO: find activeStory
+  //   const { existingPlan } = getPlanBySessionName("planning");
+  //   io.emit("updateScrumMasterPanel", { ...existingPlan });
+  // }, 2000);
 
   socket.on("disconnect", () => {
     console.log("disconnect");
