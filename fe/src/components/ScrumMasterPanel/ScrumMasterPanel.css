@@ -16,6 +16,8 @@
 .scrum-master-panel-container .voter-list-container {
   display: flex;
   flex-direction: column;
+  max-height: 460px;
+  overflow: auto;
 }
 
 .scrum-master-panel-container .voter-list-container .voter-name-container {

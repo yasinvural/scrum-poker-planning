@@ -59,6 +59,7 @@ const MasterViewPlanning = () => {
 
   return (
     <>
+      <div className="shared-url">{`http://localhost:3000/developer/${params.session}`}</div>
       <div
         className={isCompleted ? "view-planning completed" : "view-planning"}
       >

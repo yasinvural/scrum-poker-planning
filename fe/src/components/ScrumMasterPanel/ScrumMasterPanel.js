@@ -21,9 +21,8 @@ const ScrumMasterPanel = ({
   };
 
   const isVoteEnd = useMemo(() => {
-    console.log(voterList.every((voter) => voter.point));
     return voterList.every((voter) => voter.point);
-  });
+  }, [voterList]);
 
   return (
     <Card className="scrum-master-panel-container" title={name}>
