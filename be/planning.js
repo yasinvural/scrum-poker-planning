@@ -22,6 +22,10 @@ const createPlan = ({ sessionName, numOfVoters, stories }) => {
     return { error: "Number of voter should be greater than 0" };
   }
 
+  if (!stories) {
+    return { error: "Story is required" };
+  }
+
   if (stories.length === 0) {
     return { error: "It should be at least 1 story" };
   }
