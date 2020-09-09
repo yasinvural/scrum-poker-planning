@@ -3,12 +3,7 @@ const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 const router = require("./router");
-const {
-  updateStoryPoint,
-  updateActiveVoter,
-  setFinalStoryPoint,
-  getPlanBySessionName,
-} = require("./planning");
+const socketHandler = require("./socket");
 
 const port = 4000;
 const app = express();
@@ -22,42 +17,7 @@ app.use(router);
 io.on("connection", (socket) => {
   console.log("connect");
 
-  socket.on(
-    "updateStoryPoint",
-    ({ sessionName, voterName, selectedStoryPoint }) => {
-      const updated = updateStoryPoint({
-        sessionName,
-        voterName,
-        selectedStoryPoint,
-      });
-
-      io.emit("updateScrumMasterPanel", updated);
-    }
-  );
-
-  socket.on("updateActiveVoter", ({ voterName, sessionName }) => {
-    if (voterName) {
-      updateActiveVoter({ voterName, sessionName });
-    }
-  });
-
-  socket.on(
-    "setFinalStoryPoint",
-    ({ sessionName, activeStoryName, finalScore }) => {
-      const updated = setFinalStoryPoint({
-        sessionName,
-        activeStoryName,
-        finalScore,
-      });
-      io.emit("updateScrumMasterPanel", updated);
-    }
-  );
-
-  // setInterval(() => {
-  //   //TODO: find activeStory
-  //   const { existingPlan } = getPlanBySessionName("planning");
-  //   io.emit("updateScrumMasterPanel", { ...existingPlan });
-  // }, 2000);
+  socketHandler(socket, io);
 
   socket.on("disconnect", () => {
     console.log("disconnect");
