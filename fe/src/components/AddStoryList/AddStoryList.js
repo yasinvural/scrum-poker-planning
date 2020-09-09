@@ -71,7 +71,7 @@ const AddStoryList = () => {
   };
 
   const handleStartSession = () => {
-    const stories = storyList.split("\n");
+    const stories = storyList && storyList.split("\n");
     createPlan({ sessionName, numOfVoters, stories })
       .then((data) => {
         history.push(`/master/${data.data}`);
