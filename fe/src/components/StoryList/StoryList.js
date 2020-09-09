@@ -19,8 +19,19 @@ const columns = [
     key: "status",
   },
 ];
+
 const StoryList = ({ storyList }) => {
-  return <Table dataSource={storyList} columns={columns} />;
+  if (storyList.length === 0) {
+    return <div data-testid="story-list">Loading . . .</div>;
+  } else {
+    return (
+      <Table
+        data-testid="story-list"
+        dataSource={storyList}
+        columns={columns}
+      />
+    );
+  }
 };
 
 export default StoryList;

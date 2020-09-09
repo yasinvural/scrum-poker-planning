@@ -25,14 +25,22 @@ const ScrumMasterPanel = ({
   }, [voterList]);
 
   return (
-    <Card className="scrum-master-panel-container" title={name}>
+    <Card
+      data-testid="scrum-master-panel"
+      className="scrum-master-panel-container"
+      title={name}
+    >
       <div className="status">{activeStoryName} is active</div>
       <div className="voter-list-container">
-        {voterList.map((voter) => (
-          <div className="voter-name-container" key={voter.name}>
+        {voterList.map((voter, index) => (
+          <div
+            className="voter-name-container"
+            key={voter.name}
+            testid="voter-name-container"
+          >
             <div>{voter.name}</div>
             <div className="column">:</div>
-            <div>
+            <div data-testid={`vote-status-${index}`}>
               {isVoteEnd
                 ? voter.point
                 : voter.point
@@ -43,10 +51,15 @@ const ScrumMasterPanel = ({
         ))}
       </div>
       {isVoteEnd && (
-        <div className="final-score">
+        <div className="final-score" data-testid="final-score-container">
           <div className="text">Final Score</div>
           <div className="input">
-            <InputNumber min={1} value={finalScore} onChange={setFinalScore} />
+            <InputNumber
+              data-testid="final-score"
+              min={1}
+              value={finalScore}
+              onChange={setFinalScore}
+            />
           </div>
         </div>
       )}

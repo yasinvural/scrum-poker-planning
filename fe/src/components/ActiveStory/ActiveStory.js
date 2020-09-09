@@ -38,10 +38,15 @@ const ActiveStory = ({ activeStory, socket, sessionName, voterName }) => {
   };
 
   return (
-    <Card className="active-story-container" title={activeStory.name}>
+    <Card
+      data-testid="active-story-container"
+      className="active-story-container"
+      title={activeStory.name}
+    >
       <div className="story-point-row">
         {storyPoints.map((storyPoint) => (
           <div
+            data-testid={`story-point-${storyPoint}`}
             className={storyPoint === selectedStoryPoint ? "selected" : ""}
             key={storyPoint}
             onClick={() => handleSelectStoryPoint(storyPoint)}
@@ -50,10 +55,8 @@ const ActiveStory = ({ activeStory, socket, sessionName, voterName }) => {
           </div>
         ))}
       </div>
-      <div className="vote-info">
-        {selectedStoryPoint
-          ? `${selectedStoryPoint} Voted`
-          : "Please Vote !!! "}
+      <div className="vote-info" data-testid="vote-info">
+        {selectedStoryPoint ? `${selectedStoryPoint} Voted` : "Please Vote !!!"}
       </div>
     </Card>
   );

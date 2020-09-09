@@ -7,14 +7,14 @@ import { createPlan } from "../../services/planService";
 const { TextArea } = Input;
 
 const AddStoryList = () => {
-  const [sessionName, setSessionName] = useState("planning");
-  const [numOfVoters, setNumOfVoters] = useState(3);
-  const [storyList, setStoryList] = useState("story1\nstory2\nstory3");
-  const [isFormValid, setIsFormValid] = useState(true);
+  const [sessionName, setSessionName] = useState("");
+  const [numOfVoters, setNumOfVoters] = useState(1);
+  const [storyList, setStoryList] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
   const [isInputsValid, setIsInputsValid] = useState({
-    sessionNameValid: true,
+    sessionNameValid: false,
     numOfVotersValid: true,
-    storyListValid: true,
+    storyListValid: false,
   });
   const history = useHistory();
 
@@ -82,11 +82,12 @@ const AddStoryList = () => {
   };
 
   return (
-    <div className="add-story-list-container">
+    <div className="add-story-list-container" data-testid="add-story-list">
       <div className="header-info">
         <div className="session-name-container">
           <div className="title">Session Name </div>
           <Input
+            data-testid="session-name"
             placeholder="Enter Session Name"
             value={sessionName}
             maxLength={200}
@@ -96,6 +97,7 @@ const AddStoryList = () => {
         <div className="voters-container">
           <div className="title">Number of voters</div>
           <InputNumber
+            data-testid="num-of-voters"
             placeholder="Enter Number of Voters"
             min={1}
             value={numOfVoters}
@@ -104,10 +106,16 @@ const AddStoryList = () => {
         </div>
       </div>
       <div className="text-area-container">
-        <TextArea rows={8} value={storyList} onChange={handleStoryList} />
+        <TextArea
+          data-testid="story-list"
+          rows={8}
+          value={storyList}
+          onChange={handleStoryList}
+        />
       </div>
       <div className="start-session-button">
         <Button
+          data-testid="start-session-button"
           type="primary"
           disabled={!isFormValid}
           onClick={handleStartSession}

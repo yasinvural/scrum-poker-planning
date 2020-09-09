@@ -4,11 +4,13 @@ import { PageHeader } from "antd";
 
 const Logo = () => {
   return (
-    <PageHeader
-      className="logo-container"
-      title="Scrum Poker"
-      backIcon={false}
-    />
+    <div data-testid="logo">
+      <PageHeader
+        className="logo-container"
+        title="Scrum Poker"
+        backIcon={false}
+      />
+    </div>
   );
 };
 
